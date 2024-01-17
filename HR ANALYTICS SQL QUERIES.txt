@@ -1,0 +1,82 @@
+KPI REQUIRMENTS:
+1.TOTAL NO OF EMPLOYEE:
+    SELECT SUM(employee_couNt) FROM hrdata;
+
+2.TOTAL NO OF ATTRITION:
+    SELECT COUNT(attrition) FROM hrdata
+    WHERE attrition = 'Yes';
+
+3.TOTAL ATTRITION RATE:
+    SELECT ROUND(((SELECT COUNT(attrition) FROM hrdata WHERE attrition='Yes')/SUM(employee_count))*100,2) AS Attrition_Rate FROM hrdata ;
+
+4.TOTAL ACTIVE EMPLOYEE:
+    SELECT SUM(employee_count)-(SELECT COUNT(attrition) FROM hrdata WHERE attrition='Yes') AS Active_employee FROM hrdata;
+
+5.AVERAGE AGE:
+    SELECT ROUND(AVG(age),0) FROM hrdata;
+
+6.ATTRITION BY GENDER:
+    SELECT gender,COUNT(attrition) FROM hrdata
+    WHERE attrition="Yes"
+    GROUP BY gender;
+
+7.DEPARTMENT WISE ATTRITION:
+    SELECT department,COUNT(attrition),ROUND((COUNT(attrition)/(SELECT COUNT(attrition) FROM hrdata WHERE attrition='Yes'))*100,2)AS Percent FROM hrdata
+    WHERE attrition='Yes'
+    GROUP BY department
+    ORDER BY COUNT(attrition) DESC;
+
+8.NO OF EMPLOYEE BY AGE GROUP:
+    SELECT age_band, SUM(employee_count) FROM hrdata
+    WHERE attrition='Yes'
+    GROUP BY age_band;
+
+9.EDUCATION FIELD WISE ATTRITION:
+    SELECT education_field, COUNT(attrition)  FROM hrdata
+    WHERE attrition='Yes'
+    GROUP BY education_field
+    ORDER BY COUNT(Attrition);
+
+10.ATRRITION RATE FOR AGE GROUP W.R.T GENDER:
+    SELECT age_band, gender,COUNT(attrition)  FROM hrdata
+    WHERE attrition='Yes'
+    GROUP BY age_band, gender
+    ORDER BY COUNT(Attrition);
+11.JOB SATISFACTION RATNG:
+    SELECT 
+    job_role,
+    SUM(CASE WHEN job_satisfaction = 'one' THEN employee_count ELSE 0 END) AS one,
+    SUM(CASE WHEN job_satisfaction = 'two' THEN employee_count ELSE 0 END) AS two,
+    SUM(CASE WHEN job_satisfaction = 'three' THEN employee_count ELSE 0 END) AS three,
+    SUM(CASE WHEN job_satisfaction = 'four' THEN employee_count ELSE 0 END) AS four
+    FROM 
+    hrdata
+    GROUP BY 
+    job_role
+    ORDER BY 
+    job_role;
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
